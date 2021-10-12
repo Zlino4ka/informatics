@@ -27,7 +27,6 @@ def main():
     screen.blit(screen2, (0, 0))
     #screen2.set_alpha(0)
     sun(screen2, 255, 255, 153, 850, 120)
-    sun_animated(screen2)
 
 def filling(surface, r, g, b):
     """заливка холста; red, green, blue - цвет по RGB"""
@@ -148,14 +147,6 @@ def sun(surface, r, g, b, x1, y1):
     polygon(surface, (r, g, b), [(200, 120), (155, 35), (260, 65)])
     polygon(surface, (r, g, b), [(200, 120), (140, 60), (245, 35)])
     circle(surface, (r, g, b), (200, 80), 50)
-
-def sun_animated(surface):
-    n = 0
-    while n != 2:
-        pygame.transform.rotate(surface, 180)
-        pygame.display.update()
-        clock.tick(100)
-        n = n + 1
 
 def house_m(surface, r_base, g_base, b_base, r_win, g_win, b_win, r_roof, g_roof, b_roof, x1, y1, x2, y2):
     """отрисовка дома; red, green, blue - цвет по RGB, (x1, y1, x2, y2) - координаты"""

@@ -12,7 +12,7 @@ def main():
     house(screen, 255, 204, 153, 153, 204, 255, 255, 128, 128, 150, 500, 300, 200)
     house_m(screen, 255, 204, 153, 153, 204, 255, 255, 128, 128, 450, 330, 200, 100)
     # Cloud
-    cloud(screen, 255, 255, 255, 400, 200, 40)
+    cloud_animated(screen, 255, 255, 255, 400, 200, 40)
     cloud(screen, 255, 255, 255, 100, 100, 40)
     cloud(screen, 255, 255, 255, 700, 100, 35)
     # Tree
@@ -66,6 +66,13 @@ def cloud(surface, r, g, b, x1, y1, rad):
         circle(surface, (0, 0, 0), (x1, y1 - rad), rad, 4)
         x1 = x1 + rad
         n = n + 1
+
+def cloud_animated(surface, r, g, b, x1, y1, rad):
+    for i in range(50, 900):
+        x = i
+        cloud(surface, r, g, b, x, y1, rad)
+        pygame.display.update()
+        clock.tick(100)
 
 def tree(surface, r, g, b, x1, y1, rad):
     """отрисовка дерева; red, green, blue - цвет по RGB, (x1, y1) - координаты центра, радиус"""
