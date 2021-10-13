@@ -1,62 +1,58 @@
-
 from tkinter import *
 from random import randrange as rnd, choice
-import pyautogui
-
-def start(event):
-    play_zone.place(x=0,y=0)
-    play_zone.mainloop()
-
-def quit(event):
-    play_zone.destroy()
-
-def score(event):
-    getx, gety = pyautogui.position()
-    print(getx, gety)
-    sc = 0
-    if (p+r > getx > p-r) and (q+r > gety > q-r):
-        sc = sc + 1
-        print(sc)
-    else:
-        sc = sc + 0
-        print(sc)
-
-def new_ball():
-    """otrisovyvaet sharik"""
-    global p, q, r
-    play_zone.delete(ALL)
-    play_zone.create_text(520, 50, text='your score:', fill='#581845', font='Helvetica 20 bold')
-    play_zone.create_text(520, 50, text=str(score), fill='#581845', font='Helvetica 20 bold')
-
-    quitb = Button(play_zone, text='quit game')
-    quitb.bind('<Button-1>', quit)
-    quitb.place(x=540, y=700)
-
-    p = rnd(100, 700)
-    q = rnd(100, 500)
-    r = rnd(30, 50)
-    play_zone.create_oval(p-r, q-r, p+r, q+r, fill=choice(colors), width=0)
-    root.after(2000, new_ball)
-
+import time
 
 root = Tk()
-root.geometry('1080x720')
+root.geometry('800x600')
 
-start_canv = Canvas(root, bg='#581845')
-start_canv.create_text(540, 300, text='click to start a game', fill='#DAF7A6', font='Helvetica 40 bold')
-start_canv.pack(fill='both', expand=1)
-
-sb = Button(start_canv, text='START')
-sb.place(x=540, y=360)
-
-play_zone = Canvas(root, bg='#FFC300', width=1080, height=720)
+canv = Canvas(root, bg='#FFC300')
+canv.pack(fill=BOTH, expand=1)
 
 colors = ['#DAF7A6', '#FF5733', '#C70039', '#900C3F']
 
-sb.bind('<Button-1>', start)
+def new_ball():
+    global x,y,r,ball,x1,y1,r1,ball1
+    canv.delete(ball)
+    canv.delete(ball1)
+    x = rnd(100,700)
+    y = rnd(100,500)
+    r = rnd(30,50)
+    x1 = rnd(100, 700)
+    y1 = rnd(100, 500)
+    r1 = rnd(30, 50)
+    ball = canv.create_oval(x-r,y-r,x+r,y+r,fill = choice(colors), width=0)
+    ball1 = canv.create_oval(x1 - r1, y1 - r1, x1 + r1, y1 + r1, fill=choice(colors), width=0)
+    root.after(1500,new_ball)
 
-play_zone.bind('<Button-1>', score)
+def move():
+    global x, y, r, ball, x1, y1, r1, ball1
+    for i in range(100):
+        p = rnd(10,100)
+        q = rnd(10,100)
+        canv.move(ball,x-r+p,y-r+q)
+        canv.move(ball1, x1 - r1 + p, y1 - r1 + q)
+        canv.update()
 
+def click(event):
+    global points, x, x1, y, y1, r, r1, text
+    if (event.y - y) ** 2 + (event.x - x) ** 2 <= r ** 2:
+        points += 1
+        x = -1000
+        canv.delete(text)
+        canv.delete(ball)
+        text = canv.create_text(420, 20, text='YOUR SCORE: ' + str(points), font='Helvetica 20 bold', fill='#581845')
+    elif (event.y - y1) ** 2 + (event.x - x1) ** 2 <= r1 ** 2:
+        points += 1
+        x = -1000
+        canv.delete(text)
+        canv.delete(ball1)
+        text = canv.create_text(420, 20, text='YOUR SCORE: '+str(points), font='Helvetica 20 bold', fill='#581845')
+
+ball = canv.create_oval(-100, 0, 0, 0)
+ball1 = canv.create_oval(-100, 0, 0, 0)
+text = canv.create_text(420, 20, text=0, font='Helvetica 20 bold', fill='#581845')
+points = 0
 new_ball()
+canv.bind('<Button-1>', click)
 
-root.mainloop()
+mainloop()
