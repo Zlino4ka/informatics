@@ -1,13 +1,2 @@
-# informatics
-Test line111
-
-# IT_iS
-## README
-### FILE
-
-*Kursiv*
-**Zhirnyi_shrift**
-
-* Pervyi_element_spiska
-* Vtoroy_element_spiska
-* Tretyi_element_spiska
+# 20.10.2002
+Анна Маскимовна, перепроверьте, пожалуйста, допиленный файл с игрой (GUIUX3.py), там сделано основное(06.10) и дополнительное(13.10) заданиz, и прошлый файл с анимацией pygame(29.09).
